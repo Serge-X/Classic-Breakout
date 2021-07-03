@@ -24,7 +24,7 @@ const drawBall = () =>
 {
     ctx.beginPath()
     ctx.arc(x,y, ballRadius,0, Math.PI*2);
-    ctx.fillStyle= "#0095DD"
+    ctx.fillStyle= "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
@@ -69,24 +69,24 @@ const draw= () =>
     ctx.beginPath();
     drawBall();
     drawPaddle();
-    if(y + dy < ballRadius)
-    {
-        dy=-dy;
-    }
 
-    if(x + dx < ballRadius)
-    {
-        dx=-dx;
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
     }
-
-    if(y + dy > canvas.height-ballRadius)
-    {
-        dy= -dy;
-    }
-    if(x + dx > canvas.width-ballRadius)
-    {
-        dx= -dx;
-    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    } else if (y + dy > canvas.height-ballRadius)
+        {   // Check to see if ball is touching paddle
+            if (x> paddleX && x < paddleX + paddleWidth) 
+            {
+                dy=-dy   
+            } else // if ball goes passed paddle it is game over
+            {
+                alert("GAME OVER!!");
+                document.location.reload();
+                clearInterval(interval);
+            }
+        }
 
     // check if paddle is pressed
     if (rightPressed) 
@@ -113,4 +113,4 @@ const draw= () =>
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
-setInterval(draw, 10)
+let interval= setInterval(draw, 10);
