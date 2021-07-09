@@ -36,6 +36,8 @@ for (let c = 0; c < brickColumnCount; c++) {
     }
 }
 
+let score= 0;
+
 
 
 
@@ -99,16 +101,33 @@ const collisionDetection = ()  =>
             for (let  r= 0; r < brickRowCount; r++) 
                 {
                     let b = bricks[c][r];
-                    // calculation 
+                    // calculation to check if ball hit brick 
+                    // If ball did it will destroy the brick
                     if(b.status==1){
                     if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) 
                         {
                             dy =-dy;
                             b.status=0;
+                            score++
+                            if (score == brickRowCount*brickColumnCount) 
+                            {
+                                alert("YOU WIN, CONGRATULATIONS!");
+                                document.location.reload();
+                                clearInterval(interval);   
+                            }
                         }
                     }
                 }
         }
+    }
+
+
+
+const drawScore = () =>
+    {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD"
+        ctx.fillText("Score: " + score, 8, 20);
     }
 
 const draw = () => {
@@ -117,6 +136,7 @@ const draw = () => {
     drawBall();
     drawBricks();
     drawPaddle();
+    drawScore();
     collisionDetection();
 
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
