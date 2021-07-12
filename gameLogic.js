@@ -37,6 +37,15 @@ for (let c = 0; c < brickColumnCount; c++) {
 }
 
 let score= 0;
+let lives= 3;
+
+
+const drawLives= () =>
+    {
+        ctx.font = "16px Arail";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Lives: " +lives, canvas.width-65, 20)        
+    }
 
 
 
@@ -145,6 +154,7 @@ const draw = () => {
     drawBall();
     drawBricks();
     drawPaddle();
+    drawLives();
     drawScore();
     collisionDetection();
 
@@ -158,9 +168,18 @@ const draw = () => {
             dy = -dy
         } else // if ball goes passed paddle it is game over
         {
+            lives--;
+            if(!lives){
             alert("GAME OVER!!");
             document.location.reload();
             clearInterval(interval);
+            } else{
+                x= canvas.width/2;
+                y= canvas.height/2;
+                dx= 2;
+                dy= -2;
+                paddleX=(canvas.width-paddleWidth)/2;
+            }
         }
     }
 
