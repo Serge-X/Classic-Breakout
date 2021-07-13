@@ -131,7 +131,6 @@ const collisionDetection = ()  =>
                             {
                                 alert("YOU WIN, CONGRATULATIONS!");
                                 document.location.reload();
-                                clearInterval(interval);   
                             }
                         }
                     }
@@ -172,7 +171,6 @@ const draw = () => {
             if(!lives){
             alert("GAME OVER!!");
             document.location.reload();
-            clearInterval(interval);
             } else{
                 x= canvas.width/2;
                 y= canvas.height/2;
@@ -199,10 +197,11 @@ const draw = () => {
 
     x += dx
     y += dy
+    requestAnimationFrame(draw);
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
-let interval = setInterval(draw, 10);
+draw();
